@@ -39,7 +39,9 @@ fn main() {
         }
     }
 
-    if cliargs[1] == "--debug" || cliargs[1] == "-d" {
-        println!("{:?}", variables);
+    if cliargs.len() == 2 {
+        if cliargs[1] == "--debug" || cliargs[1] == "-d" {
+            println!("{:?}", variables);
+        }
     }
 }

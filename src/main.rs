@@ -38,4 +38,8 @@ fn main() {
             exit(1);
         }
     }
+
+    if cliargs[1] == "--debug" || cliargs[1] == "-d" {
+        println!("{:?}", variables);
+    }
 }

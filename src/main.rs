@@ -42,6 +42,10 @@ fn main() {
     if cliargs.len() == 2 {
         if cliargs[1] == "--debug" || cliargs[1] == "-d" {
             println!("{:?}", variables);
+        } else if cliargs[1] == "--help" || cliargs[1] == "-h" {
+            println!("Heres a list of tips!");
+            println!("For now variables cant have spaces in the value.");
+            println!("They will never be able to have spaces in the name.");
         }
     }
 }

@@ -3,6 +3,7 @@ use std::fs;
 use std::collections::HashMap;
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum Variable {
     Str(String),
     Int(i16)

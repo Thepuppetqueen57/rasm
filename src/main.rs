@@ -44,6 +44,20 @@ fn main() {
             let linefunc: Vec<&str> = line.split(" ").collect();
 
             variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
+        } else if comarg[0] == "outv" {
+            let printed_var = variables.get(comarg[1]);
+
+            match printed_var {
+                Some(_variable) => {
+                    println!("{:?}", printed_var.unwrap());
+                }
+
+                None => {
+                    println!("Variable {} doesnt exist!", comarg[1]);
+                    exit(1)
+                }
+            }
+
         } else {
             println!("Unknown function");
             exit(1);

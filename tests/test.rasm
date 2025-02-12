@@ -1,3 +1,5 @@
 out "testing testing rahhh";
 str big_bird "hey_guardy";
-int small_man 8
+int small_man 8;
+outv big_bird;
+outv small_man

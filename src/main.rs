@@ -17,12 +17,12 @@ fn main() {
     }
 
     if cliargs.is_empty() {
-        println!("You did not supply a .rasm file!");
+        println!("Error 1: You did not supply a .rasm file!");
         exit(1);
     }
 
     let code = fs::read_to_string(cliargs[0].clone())
-        .expect("Failed to load code. Does the file exist?");
+        .expect("Error 2: Failed to load code. Does the file exist?");
 
     let lines: Vec<&str> = code.split(";\n").collect();
 
@@ -53,13 +53,13 @@ fn main() {
                 }
 
                 None => {
-                    println!("Variable {} doesnt exist!", comarg[1]);
+                    println!("Error 4: Variable {} doesnt exist!", comarg[1]);
                     exit(1)
                 }
             }
 
         } else {
-            println!("Unknown function");
+            println!("Error 3: Unknown function");
             exit(1);
         }
     }

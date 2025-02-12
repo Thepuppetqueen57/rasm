@@ -2,6 +2,12 @@ use std::process::exit;
 use std::fs;
 use std::collections::HashMap;
 
+#[derive(Debug)]
+enum Variable {
+    Str(String),
+    Int(i16)
+}
+
 fn main() {
     let mut cliargs: Vec<String> = vec![];
 
@@ -19,7 +25,7 @@ fn main() {
 
     let lines: Vec<&str> = code.split(";\n").collect();
 
-    let mut variables: HashMap<String, String> = HashMap::new();
+    let mut variables: HashMap<String, Variable> = HashMap::new();
 
     for line in lines {
         // comarg stands for command argument btw
@@ -32,7 +38,11 @@ fn main() {
         } else if comarg[0] == "str" {
             let linefunc: Vec<&str> = line.split(" ").collect();
 
-            variables.insert(format!("{}", linefunc[1]), format!("{}", linefunc[2]));
+            variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
+        } else if comarg[0] == "int" {
+            let linefunc: Vec<&str> = line.split(" ").collect();
+
+            variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
         } else {
             println!("Unknown function");
             exit(1);

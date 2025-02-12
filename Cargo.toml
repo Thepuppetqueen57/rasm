@@ -5,3 +5,4 @@ version = "1.0.0"
 edition = "2021"
 
 [dependencies]
+colored = "3.0.0"

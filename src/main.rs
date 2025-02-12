@@ -1,6 +1,7 @@
 use std::process::exit;
 use std::fs;
 use std::collections::HashMap;
+use colored::Colorize;
 
 #[derive(Debug)]
 #[allow(dead_code)]
@@ -17,12 +18,12 @@ fn main() {
     }
 
     if cliargs.is_empty() {
-        println!("Error 1: You did not supply a .rasm file!");
+        println!("{}", "Error 1: You did not supply a .rasm file!".red());
         exit(1);
     }
 
     let code = fs::read_to_string(cliargs[0].clone())
-        .expect("Error 2: Failed to load code. Does the file exist?");
+        .expect(&format!("{}", "Error 2: Failed to load code. Does the file exist?".red()));
 
     let lines: Vec<&str> = code.split(";\n").collect();
 
@@ -53,13 +54,13 @@ fn main() {
                 }
 
                 None => {
-                    println!("Error 4: Variable {} doesnt exist!", comarg[1]);
+                    println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
                     exit(1)
                 }
             }
 
         } else {
-            println!("Error 3: Unknown function");
+            println!("{}", "Error 3: Unknown function".red());
             exit(1);
         }
     }

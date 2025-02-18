@@ -10,6 +10,12 @@ enum Variable {
     Int(i16)
 }
 
+fn split_amount(input: &str, delimiter: &str, n: usize) -> Vec<String> {
+    input.splitn(n, delimiter)
+        .map(|s| s.to_string())
+        .collect()
+}
+
 fn main() {
     let mut cliargs: Vec<String> = vec![];
 
@@ -38,7 +44,7 @@ fn main() {
         if comarg[0] == "out" {
             println!("{}", comarg[1]);
         } else if comarg[0] == "str" {
-            let linefunc: Vec<&str> = line.split(" ").collect();
+            let linefunc: Vec<String> = split_amount(line, " ", 3);
 
             variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
         } else if comarg[0] == "int" {

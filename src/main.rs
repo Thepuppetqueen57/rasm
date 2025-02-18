@@ -65,7 +65,9 @@ fn main() {
                 }
             }
 
-        } else {
+        }
+
+        else {
             println!("{}", "Error 3: Unknown function".red());
             exit(1);
         }

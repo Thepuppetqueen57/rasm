@@ -4,10 +4,12 @@ use std::collections::HashMap;
 use colored::Colorize;
 
 #[derive(Debug)]
+#[derive(PartialEq)]
 #[allow(dead_code)]
 enum Variable {
     Str(String),
-    Int(i16)
+    Int(i16),
+    Byt(i8),
 }
 
 fn split_amount(input: &str, delimiter: &str, n: usize) -> Vec<String> {
@@ -65,6 +67,15 @@ fn main() {
                 }
             }
 
+        } else if comarg[0] == "bit" {
+            let linefunc: Vec<&str> = line.split(" ").collect();
+
+            if linefunc[2].parse::<i8>().unwrap() == 0 || linefunc[2].parse::<i8>().unwrap() == 1 {
+                variables.insert(format!("{}", linefunc[1]), Variable::Byt(format!("{}", linefunc[2]).parse::<i8>().unwrap()));
+            } else {
+                println!("{} {} {} {}", "Error 5: Variable".red(), linefunc[1].blue(), "is a bit yet the value is".red(), linefunc[2].blue());
+                exit(1)
+            }
         }
 
         else {

@@ -76,6 +76,8 @@ fn main() {
                 println!("{} {} {} {}", "Error 5: Variable".red(), linefunc[1].blue(), "is a bit yet the value is".red(), linefunc[2].blue());
                 exit(1)
             }
+        } else if comarg[0] == "HALT" {
+            exit(0);
         }
 
         else {

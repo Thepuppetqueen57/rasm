@@ -37,52 +37,54 @@ fn main() {
 
     let mut variables: HashMap<String, Variable> = HashMap::new();
 
-    for line in lines {
-        // comarg stands for command argument btw
-        let comarg: Vec<&str> = line.split_once(" ")
-            .map(|(first, second)| vec![first, second])
-            .unwrap_or_else(|| vec![line]);
-
-        if comarg[0] == "out" {
-            println!("{}", comarg[1]);
-        } else if comarg[0] == "str" {
-            let linefunc: Vec<String> = split_amount(line, " ", 3);
-
-            variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
-        } else if comarg[0] == "int" {
-            let linefunc: Vec<&str> = line.split(" ").collect();
-
-            variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
-        } else if comarg[0] == "outv" {
-            let printed_var = variables.get(comarg[1]);
-
-            match printed_var {
-                Some(_variable) => {
-                    println!("{:?}", printed_var.unwrap());
+    'inf: loop {
+        for line in &lines {
+            // comarg stands for command argument btw
+            let comarg: Vec<&str> = line.split_once(" ")
+                .map(|(first, second)| vec![first, second])
+                .unwrap_or_else(|| vec![line]);
+    
+            if comarg[0] == "out" {
+                println!("{}", comarg[1]);
+            } else if comarg[0] == "str" {
+                let linefunc: Vec<String> = split_amount(line, " ", 3);
+    
+                variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
+            } else if comarg[0] == "int" {
+                let linefunc: Vec<&str> = line.split(" ").collect();
+    
+                variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
+            } else if comarg[0] == "outv" {
+                let printed_var = variables.get(comarg[1]);
+    
+                match printed_var {
+                    Some(_variable) => {
+                        println!("{:?}", printed_var.unwrap());
+                    }
+    
+                    None => {
+                        println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
+                        exit(1)
+                    }
                 }
-
-                None => {
-                    println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
+    
+            } else if comarg[0] == "bit" {
+                let linefunc: Vec<&str> = line.split(" ").collect();
+    
+                if linefunc[2].parse::<i8>().unwrap() == 0 || linefunc[2].parse::<i8>().unwrap() == 1 {
+                    variables.insert(format!("{}", linefunc[1]), Variable::Byt(format!("{}", linefunc[2]).parse::<i8>().unwrap()));
+                } else {
+                    println!("{} {} {} {}", "Error 5: Variable".red(), linefunc[1].blue(), "is a bit yet the value is".red(), linefunc[2].blue());
                     exit(1)
                 }
+            } else if comarg[0] == "HALT" {
+                break 'inf;
             }
-
-        } else if comarg[0] == "bit" {
-            let linefunc: Vec<&str> = line.split(" ").collect();
-
-            if linefunc[2].parse::<i8>().unwrap() == 0 || linefunc[2].parse::<i8>().unwrap() == 1 {
-                variables.insert(format!("{}", linefunc[1]), Variable::Byt(format!("{}", linefunc[2]).parse::<i8>().unwrap()));
-            } else {
-                println!("{} {} {} {}", "Error 5: Variable".red(), linefunc[1].blue(), "is a bit yet the value is".red(), linefunc[2].blue());
-                exit(1)
+    
+            else {
+                println!("{}", "Error 3: Unknown function".red());
+                exit(1);
             }
-        } else if comarg[0] == "HALT" {
-            exit(0);
-        }
-
-        else {
-            println!("{}", "Error 3: Unknown function".red());
-            exit(1);
         }
     }
 

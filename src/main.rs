@@ -31,7 +31,7 @@ fn main() {
     let code = fs::read_to_string(cliargs[0].clone())
         .expect(&format!("{}", "Error 2: Failed to load code. Does the file exist?".red()));
 
-    let lines: Vec<&str> = code.split(";\n").collect();
+    let lines: Vec<&str> = code.split(';').map(|l| l.trim()).collect();
 
     let mut variables: HashMap<String, Variable> = HashMap::new();
 

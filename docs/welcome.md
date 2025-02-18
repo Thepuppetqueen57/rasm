@@ -6,9 +6,9 @@
 # Basics
  Firstly we will talk about syntax rules!
 
- Every line except the last one has to have a semicolon!
+ Every program must have the HALT keyword at the end!
 
- If the last line has a semicolon it will crash (sorry).
+ If you don't put HALT then it will loop forever!
 
 # Running a program
  Running a program is easy!

@@ -37,6 +37,8 @@ fn main() {
 
     let mut variables: HashMap<String, Variable> = HashMap::new();
 
+    let mut loops: u32 = 1;
+
     'inf: loop {
         for line in &lines {
             // comarg stands for command argument btw
@@ -55,19 +57,22 @@ fn main() {
     
                 variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
             } else if comarg[0] == "outv" {
-                let printed_var = variables.get(comarg[1]);
-    
-                match printed_var {
-                    Some(_variable) => {
-                        println!("{:?}", printed_var.unwrap());
+                if comarg[1] != "LOOP" {
+                    let printed_var = variables.get(comarg[1]);
+
+                    match printed_var {
+                        Some(_variable) => {
+                            println!("{:?}", printed_var.unwrap());
+                        }
+
+                        None => {
+                            println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
+                            exit(1)
+                        }
                     }
-    
-                    None => {
-                        println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
-                        exit(1)
-                    }
+                } else {
+                    println!("{}", loops);
                 }
-    
             } else if comarg[0] == "bit" {
                 let linefunc: Vec<&str> = line.split(" ").collect();
     
@@ -86,6 +91,8 @@ fn main() {
                 exit(1);
             }
         }
+
+        loops += 1
     }
 
     if cliargs.len() == 2 {

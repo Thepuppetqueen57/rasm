@@ -10,4 +10,6 @@ outv small_man;
 outv transistor0;
 outv transistor1;
 
+outv LOOP;
+
 HALT

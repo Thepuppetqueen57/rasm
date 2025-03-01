@@ -85,7 +85,9 @@ fn main() {
             } else if comarg[0] == "HALT" {
                 break 'inf;
             }
-    
+
+            else if comarg[0] == "//" {}
+
             else {
                 println!("{}", "Error 3: Unknown function".red());
                 exit(1);

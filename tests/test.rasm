@@ -1,15 +1,19 @@
 out "testing testing rahhh";
 
+// Variable definitions
 str big_bird "hey guardy";
 int small_man 8;
 bit transistor0 0;
 bit transistor1 1;
 
+// Printing them
 outv big_bird;
 outv small_man;
 outv transistor0;
 outv transistor1;
 
+// Prints the amount of times the program has looped
 outv LOOP;
 
+// Stops the program so it doesnt loop;
 HALT

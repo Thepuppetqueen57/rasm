@@ -18,25 +18,7 @@ fn split_amount(input: &str, delimiter: &str, n: usize) -> Vec<String> {
         .collect()
 }
 
-fn main() {
-    let mut cliargs: Vec<String> = vec![];
-
-    for argument in std::env::args().skip(1) {
-        cliargs.push(argument);
-    }
-
-    if cliargs.is_empty() {
-        println!("{}", "Error 1: You did not supply a .rasm file!".red());
-        exit(1);
-    }
-
-    let code = fs::read_to_string(cliargs[0].clone())
-        .expect(&format!("{}", "Error 2: Failed to load code. Does the file exist?".red()));
-
-    let lines: Vec<&str> = code.split(';').map(|l| l.trim()).collect();
-
-    let mut variables: HashMap<String, Variable> = HashMap::new();
-
+fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
     let mut loops: u32 = 1;
 
     'inf: loop {
@@ -96,6 +78,30 @@ fn main() {
 
         loops += 1
     }
+}
+
+fn main() {
+    let mut cliargs: Vec<String> = vec![];
+
+    for argument in std::env::args().skip(1) {
+        cliargs.push(argument);
+    }
+
+    if cliargs.is_empty() {
+        println!("{}", "Error 1: You did not supply a .rasm file!".red());
+        exit(1);
+    }
+
+    let code = fs::read_to_string(cliargs[0].clone())
+        .expect(&format!("{}", "Error 2: Failed to load code. Does the file exist?".red()));
+
+    let lines: Vec<&str> = code.split(';').map(|l| l.trim()).collect();
+
+    let mut variables: HashMap<String, Variable> = HashMap::new();
+
+    // let mut loops: u32 = 1;
+
+    parse_lines(lines, &mut variables);
 
     if cliargs.len() == 2 {
         if cliargs[1] == "--debug" || cliargs[1] == "-d" {

@@ -70,6 +70,17 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
 
             else if comarg[0] == "//" {}
 
+            else if comarg[0] == "inc" {
+                let linefunc: Vec<&str> = line.split(" ").collect();
+
+                if let Variable::Int(value) = variables.get(linefunc[1]).unwrap() {
+                    let new_value = value + linefunc[2].parse::<i16>().unwrap();
+
+                    variables.remove(linefunc[1]);
+                    variables.insert(linefunc[1].to_string(), Variable::Int(new_value));
+                }
+            }
+
             else {
                 println!("{}", "Error 3: Unknown function".red());
                 exit(1);

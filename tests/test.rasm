@@ -19,5 +19,8 @@ outv small_man;
 // Prints the amount of times the program has looped;
 outv LOOP;
 
+// Waits one second to stop the program;
+rest 1000;
+
 // Stops the program so it doesnt loop;
 HALT

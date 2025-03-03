@@ -108,6 +108,10 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                 }
             }
 
+            else if comarg[0] == "rest" {
+                std::thread::sleep(std::time::Duration::from_millis(comarg[1].parse::<u64>().unwrap()));
+            }
+
             else {
                 println!("{}", "Error 3: Unknown function".red());
                 exit(1);

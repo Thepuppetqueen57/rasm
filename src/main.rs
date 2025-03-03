@@ -50,7 +50,9 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
 
                     match printed_var {
                         Some(_variable) => {
-                            println!("{:?}", printed_var.unwrap());
+                            if let Variable::Int(value) = variables.get(comarg[1]).unwrap() {
+                                println!("{}", value);
+                            }
                         }
 
                         None => {

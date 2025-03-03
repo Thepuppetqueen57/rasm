@@ -30,15 +30,21 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
     
             if comarg[0] == "out" {
                 println!("{}", comarg[1]);
-            } else if comarg[0] == "str" {
+            }
+
+            else if comarg[0] == "str" {
                 let linefunc: Vec<String> = split_amount(line, " ", 3);
     
                 variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
-            } else if comarg[0] == "int" {
+            }
+
+            else if comarg[0] == "int" {
                 let linefunc: Vec<&str> = line.split(" ").collect();
     
                 variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
-            } else if comarg[0] == "outv" {
+            }
+
+            else if comarg[0] == "outv" {
                 if comarg[1] != "LOOP" {
                     let printed_var = variables.get(comarg[1]);
 
@@ -55,7 +61,9 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                 } else {
                     println!("{}", loops);
                 }
-            } else if comarg[0] == "bit" {
+            }
+
+            else if comarg[0] == "bit" {
                 let linefunc: Vec<&str> = line.split(" ").collect();
     
                 if linefunc[2].parse::<i8>().unwrap() == 0 || linefunc[2].parse::<i8>().unwrap() == 1 {
@@ -64,7 +72,9 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                     println!("{} {} {} {}", "Error 5: Variable".red(), linefunc[1].blue(), "is a bit yet the value is".red(), linefunc[2].blue());
                     exit(1)
                 }
-            } else if comarg[0] == "HALT" {
+            }
+
+            else if comarg[0] == "HALT" {
                 break 'inf;
             }
 

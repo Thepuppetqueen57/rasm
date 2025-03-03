@@ -22,6 +22,9 @@ outv LOOP;
 cmp big_bird "hey_guardy" 1;
 out "well hey!";
 
+cmp small_man 10 1;
+out "the small man is 10 years old";
+
 // Waits one second to stop the program;
 rest 1000;
 

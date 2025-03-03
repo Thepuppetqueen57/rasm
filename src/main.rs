@@ -119,10 +119,24 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
     
                 else if comarg[0] == "cmp" {
                     let linefunc: Vec<&str> = line.split(" ").collect();
-    
-                    if variables.get(linefunc[1]).unwrap() != &Variable::Str(linefunc[2].to_string()) {
-                        line_number_at_if = line_number;
-                        if_statement_size = linefunc[3].parse().unwrap();
+
+                    let valid_int: Result<i16, _> = linefunc[2].parse();
+
+                    match valid_int {
+                        Ok(value) => {
+                            if variables.get(linefunc[1]).unwrap() != &Variable::Int(value) &&
+                            variables.get(linefunc[1]).unwrap() != &Variable::Byt(value as i8) {
+                                line_number_at_if = line_number;
+                                if_statement_size = linefunc[3].parse().unwrap();
+                            }
+                        }
+
+                        _ => {
+                            if variables.get(linefunc[1]).unwrap() != &Variable::Str(linefunc[2].to_string()) {
+                                line_number_at_if = line_number;
+                                if_statement_size = linefunc[3].parse().unwrap();
+                            }
+                        }
                     }
                 }
     

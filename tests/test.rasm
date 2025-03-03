@@ -1,7 +1,7 @@
 out "testing testing rahhh";
 
 // Variable definitions;
-str big_bird "hey guardy";
+str big_bird "hey_guardy";
 int small_man 8;
 bit transistor0 0;
 bit transistor1 1;
@@ -18,6 +18,9 @@ outv small_man;
 
 // Prints the amount of times the program has looped;
 outv LOOP;
+
+cmp big_bird "hey_guardy" 1;
+out "well hey!";
 
 // Waits one second to stop the program;
 rest 1000;

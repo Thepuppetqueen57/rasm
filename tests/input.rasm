@@ -1,0 +1,9 @@
+get cat;
+outv cat;
+
+str existing_var "hey_buddy";
+outv existing_var;
+get existing_var;
+outv existing_var;
+
+HALT

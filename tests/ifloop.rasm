@@ -1,0 +1,6 @@
+out "This will print 3 times!";
+
+rest 300;
+
+cmp LOOP 3 1;
+HALT

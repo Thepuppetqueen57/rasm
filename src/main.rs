@@ -125,10 +125,17 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
 
                     match valid_int {
                         Ok(value) => {
-                            if variables.get(linefunc[1]).unwrap() != &Variable::Int(value) &&
-                            variables.get(linefunc[1]).unwrap() != &Variable::Byt(value as i8) {
-                                line_number_at_if = line_number;
-                                if_statement_size = linefunc[3].parse().unwrap();
+                            if linefunc[1] != "LOOP" {
+                                if variables.get(linefunc[1]).unwrap() != &Variable::Int(value) &&
+                                variables.get(linefunc[1]).unwrap() != &Variable::Byt(value as i8) {
+                                    line_number_at_if = line_number;
+                                    if_statement_size = linefunc[3].parse().unwrap();
+                                }
+                            } else {
+                                if loops != value as u32 {
+                                    line_number_at_if = line_number;
+                                    if_statement_size = linefunc[3].parse().unwrap();
+                                }
                             }
                         }
 

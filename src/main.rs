@@ -2,6 +2,7 @@ use std::process::exit;
 use std::fs;
 use std::collections::HashMap;
 use colored::Colorize;
+use std::io;
 
 #[derive(Debug)]
 #[derive(PartialEq)]
@@ -139,7 +140,32 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                         }
                     }
                 }
-    
+				
+				else if comarg[0] == "get" {
+                let linefunc: Vec<&str> = line.split(" ").collect();
+
+                let var = variables.get(linefunc[1]);
+                 //Credit to the fluid man(fluix)
+                match var {
+                    Some(_variable) => {
+                        if let Variable::Str(value) = variables.get(linefunc[1]).unwrap() {
+                            let mut new_value = String::new();
+                            io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
+							new_value = new_value.trim().to_string();
+                            variables.remove(linefunc[1]);
+                            variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
+                        }
+                    }
+
+                    None => {
+                        let mut new_value = String::new();
+                            io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
+							new_value = new_value.trim().to_string();
+                            variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
+                    }
+                }
+            }
+				
                 else {
                     println!("{}", "Error 3: Unknown function".red());
                     exit(1);

@@ -147,13 +147,11 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                     let var = variables.get(linefunc[1]);
                     match var {
                         Some(_variable) => {
-                            if let Variable::Str(value) = variables.get(linefunc[1]).unwrap() {
-                                let mut new_value = String::new();
-                                io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
-                                new_value = new_value.trim().to_string();
-                                variables.remove(linefunc[1]);
-                                variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
-                            }
+                            let mut new_value = String::new();
+                            io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
+                            new_value = new_value.trim().to_string();
+                            variables.remove(linefunc[1]);
+                            variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
                         }
 
                         None => {

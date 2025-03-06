@@ -3,6 +3,11 @@ name = "rasm-lang"
 description = "RASM is a small Interpreted Programming Language"
 version = "1.0.0"
 edition = "2024"
+authors = ["Puppet <doggyandkira2013@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/Thepuppetqueen57/rasm"
+license-file = "LICENSE"
+keywords = ["programming-language", "interpreted", "high-level"]
 
 [dependencies]
 colored = "3.0.0"

@@ -22,8 +22,8 @@ fn split_amount(input: &str, delimiter: &str, n: usize) -> Vec<String> {
 fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
     let mut loops: u32 = 1;
     let mut line_number: u32 = 0;
-    let mut line_number_at_if: u32 = 0;
-    let mut if_statement_size: u32 = 0;
+    let mut line_number_at_cmp: u32 = 0;
+    let mut cmp_statement_size: u32 = 0;
 
     'inf: loop {
         for line in &lines {
@@ -32,8 +32,8 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                 .map(|(first, second)| vec![first, second])
                 .unwrap_or_else(|| vec![line]);
 
-            if line_number > line_number_at_if + if_statement_size ||
-            if_statement_size == 0 {
+            if line_number > line_number_at_cmp + cmp_statement_size ||
+            cmp_statement_size == 0 {
                 if comarg[0] == "out" {
                     println!("{}", comarg[1]);
                 }
@@ -128,21 +128,21 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                             if linefunc[1] != "LOOP" {
                                 if variables.get(linefunc[1]).unwrap() != &Variable::Int(value) &&
                                 variables.get(linefunc[1]).unwrap() != &Variable::Byt(value as i8) {
-                                    line_number_at_if = line_number;
-                                    if_statement_size = linefunc[3].parse().unwrap();
+                                    line_number_at_cmp = line_number;
+                                    cmp_statement_size = linefunc[3].parse().unwrap();
                                 }
                             } else {
                                 if loops != value as u32 {
-                                    line_number_at_if = line_number;
-                                    if_statement_size = linefunc[3].parse().unwrap();
+                                    line_number_at_cmp = line_number;
+                                    cmp_statement_size = linefunc[3].parse().unwrap();
                                 }
                             }
                         }
 
                         _ => {
                             if variables.get(linefunc[1]).unwrap() != &Variable::Str(linefunc[2].to_string()) {
-                                line_number_at_if = line_number;
-                                if_statement_size = linefunc[3].parse().unwrap();
+                                line_number_at_cmp = line_number;
+                                cmp_statement_size = linefunc[3].parse().unwrap();
                             }
                         }
                     }

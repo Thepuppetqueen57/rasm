@@ -1,8 +1,8 @@
 [package]
-name = "rasm"
-description = "rasm is a small interpreted programming language"
+name = "rasm-lang"
+description = "RASM is a small Interpreted Programming Language"
 version = "1.0.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 colored = "3.0.0"

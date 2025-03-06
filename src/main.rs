@@ -213,6 +213,8 @@ fn main() {
             println!("Heres a list of tips!");
             println!("For now variables cant have spaces in the value.");
             println!("They will never be able to have spaces in the name.");
+            println!("--help has been deprecated!");
+            println!("Its a way better idea to read the docs!");
         }
     }
 }

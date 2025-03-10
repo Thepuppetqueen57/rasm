@@ -98,8 +98,8 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                     let var = variables.get(linefunc[1]);
     
                     match var {
-                        Some(_variable) => {
-                            if let Variable::Int(value) = variables.get(linefunc[1]).unwrap() {
+                        Some(variable) => {
+                            if let Variable::Int(value) = variable {
                                 let new_value = value + linefunc[2].parse::<i16>().unwrap();
     
                                 variables.remove(linefunc[1]);

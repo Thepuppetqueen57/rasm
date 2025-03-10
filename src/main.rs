@@ -55,12 +55,12 @@ fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
                         let printed_var = variables.get(comarg[1]);
     
                         match printed_var {
-                            Some(_variable) => {
-                                if let Variable::Str(value) = variables.get(comarg[1]).unwrap() {
+                            Some(variable) => {
+                                if let Variable::Str(value) = variable {
                                     println!("{}", value);
-                                } else if let Variable::Int(value) = variables.get(comarg[1]).unwrap() {
+                                } else if let Variable::Int(value) = variable {
                                     println!("{}", value);
-                                } else if let Variable::Byt(value) = variables.get(comarg[1]).unwrap() {
+                                } else if let Variable::Byt(value) = variable {
                                     println!("{}", value);
                                 }
                             }

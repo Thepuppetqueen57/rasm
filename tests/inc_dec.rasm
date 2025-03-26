@@ -1,0 +1,9 @@
+int var 1;
+
+inc var 2;
+outv var;
+
+dec var 1;
+outv var;
+
+HALT

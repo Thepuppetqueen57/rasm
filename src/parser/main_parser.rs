@@ -25,23 +25,23 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                 if comarg[0] == "out" {
                     println!("{}", comarg[1]);
                 }
-    
+
                 else if comarg[0] == "str" {
                     let linefunc: Vec<String> = split_amount(line, " ", 3);
-        
+
                     variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
                 }
-    
+
                 else if comarg[0] == "int" {
                     let linefunc: Vec<&str> = line.split(" ").collect();
-        
+
                     variables.insert(format!("{}", linefunc[1]), Variable::Int(format!("{}", linefunc[2]).parse::<i16>().unwrap()));
                 }
-    
+
                 else if comarg[0] == "outv" {
                     if comarg[1] != "LOOP" {
                         let printed_var = variables.get(comarg[1]);
-    
+
                         match printed_var {
                             Some(variable) => {
                                 if let Variable::Str(value) = variable {
@@ -52,7 +52,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                                     println!("{}", value);
                                 }
                             }
-    
+
                             None => {
                                 println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
                                 exit(1)
@@ -62,10 +62,10 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                         println!("{}", loops);
                     }
                 }
-    
+
                 else if comarg[0] == "bit" {
                     let linefunc: Vec<&str> = line.split(" ").collect();
-        
+
                     if linefunc[2].parse::<i8>().unwrap() == 0 || linefunc[2].parse::<i8>().unwrap() == 1 {
                         variables.insert(format!("{}", linefunc[1]), Variable::Byt(format!("{}", linefunc[2]).parse::<i8>().unwrap()));
                     } else {
@@ -73,39 +73,61 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                         exit(1)
                     }
                 }
-    
+
                 else if comarg[0] == "HALT" {
                     break 'inf;
                 }
-    
+
                 else if comarg[0] == "//" {}
-    
+
                 else if comarg[0] == "inc" {
                     let linefunc: Vec<&str> = line.split(" ").collect();
-    
+
                     let var = variables.get(linefunc[1]);
-    
+
                     match var {
                         Some(variable) => {
                             if let Variable::Int(value) = variable {
                                 let new_value = value + linefunc[2].parse::<i16>().unwrap();
-    
+
                                 variables.remove(linefunc[1]);
                                 variables.insert(linefunc[1].to_string(), Variable::Int(new_value));
                             }
                         }
-    
+
                         None => {
                             println!("{} {} {}", "Error 4: Variable".red(), linefunc[1].blue(), "doesnt exist!".red());
                             exit(1)
                         }
                     }
                 }
-    
+
+                else if comarg[0] == "dec" {
+                    let linefunc: Vec<&str> = line.split(" ").collect();
+
+                    let var = variables.get(linefunc[1]);
+
+                    match var {
+                        Some(variable) => {
+                            if let Variable::Int(value) = variable {
+                                let new_value = value - linefunc[2].parse::<i16>().unwrap();
+
+                                variables.remove(linefunc[1]);
+                                variables.insert(linefunc[1].to_string(), Variable::Int(new_value));
+                            }
+                        }
+
+                        None => {
+                            println!("{} {} {}", "Error 4: Variable".red(), linefunc[1].blue(), "doesnt exist!".red());
+                            exit(1)
+                        }
+                    }
+                }
+
                 else if comarg[0] == "rest" {
                     std::thread::sleep(std::time::Duration::from_millis(comarg[1].parse::<u64>().unwrap()));
                 }
-    
+
                 else if comarg[0] == "cmp" {
                     let linefunc: Vec<&str> = line.split(" ").collect();
 

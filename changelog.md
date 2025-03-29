@@ -1,6 +1,8 @@
 # 1.2.0
  Added the goto keyword (Skips to the line you give it)
 
+ Added get and goto to docs
+
 # 1.1.0
  Added the dec keyword (Decrements a variable)
 

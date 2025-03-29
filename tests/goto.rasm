@@ -1,0 +1,4 @@
+out FOREVER;
+goto 1;
+out I cant happen :(;
+HALT;

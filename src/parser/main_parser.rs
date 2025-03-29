@@ -17,7 +17,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
 
     'inf: loop {
         for (i, line) in lines.iter().enumerate().skip(index) {
-	    index += 1;
+        index += 1;
             // comarg stands for command argument btw
             let comarg: Vec<&str> = line.split_once(" ")
                 .map(|(first, second)| vec![first, second])
@@ -182,14 +182,14 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                         }
                     }
                 } else if comarg[0] == "goto" {
-			let num = comarg[1].parse::<usize>().unwrap();
-			if(num < lines.len() && num >= 0) {
-				index = num - 1;
-				break;
-			} else { 
-				println!("{}", "Error 7: Line doesn't exist!");
-			}
-		}
+                    let num = comarg[1].parse::<usize>().unwrap();
+                    if num < lines.len() && num > 0 {
+                        index = num - 1;
+                        break;
+                    } else {
+                        println!("{}", "Error 7: Line doesn't exist!");
+                    }
+        }
 
                 else {
                     println!("{}", "Error 3: Unknown function".red());

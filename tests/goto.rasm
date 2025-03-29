@@ -1,4 +1,5 @@
 out FOREVER;
-goto 1;
+goto 4;
 out I cant happen :(;
-HALT;
+out but I can!;
+// padding for it to not DIE

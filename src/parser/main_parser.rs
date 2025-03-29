@@ -14,8 +14,11 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
     let mut cmp_statement_size: u32 = 0;
 
     let mut index = 0;
+    let mut goto = false;
 
     'inf: loop {
+	if (!goto) { index = 0; }
+	else { goto = false; }
         for (i, line) in lines.iter().enumerate().skip(index) {
         index += 1;
             // comarg stands for command argument btw
@@ -185,21 +188,19 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                     let num = comarg[1].parse::<usize>().unwrap();
                     if num < lines.len() && num > 0 {
                         index = num - 1;
+			goto = true;
                         break;
-                    } else {
-                        println!("{}", "Error 7: Line doesn't exist!");
                     }
-                }
-
+		}
                 else {
                     println!("{}", "Error 3: Unknown function".red());
                     exit(1);
                 }
             }
 
-            line_number += 1
+            line_number += 1;
+	    goto = false;
         }
-
-        loops += 1
+        loops += 1;
     }
 }

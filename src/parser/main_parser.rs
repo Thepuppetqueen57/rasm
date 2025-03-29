@@ -189,7 +189,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                     } else {
                         println!("{}", "Error 7: Line doesn't exist!");
                     }
-        }
+                }
 
                 else {
                     println!("{}", "Error 3: Unknown function".red());

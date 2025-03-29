@@ -186,7 +186,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                     }
                 } else if comarg[0] == "goto" {
                     let num = comarg[1].parse::<usize>().unwrap();
-                    if num < lines.len() && num > 0 {
+                    if num <= lines.len() && num > 0 {
                         index = num - 1;
                         goto = true;
                         break;

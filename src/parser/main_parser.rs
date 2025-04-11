@@ -19,7 +19,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
     'inf: loop {
         if !goto { index = 0; }
         else { goto = false; }
-        for (i, line) in lines.iter().enumerate().skip(index) {
+        for (_i, line) in lines.iter().enumerate().skip(index) {
             index += 1;
             // comarg stands for command argument btw
             let comarg: Vec<&str> = line.split_once(" ")

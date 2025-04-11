@@ -35,7 +35,14 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                 else if comarg[0] == "str" {
                     let linefunc: Vec<String> = split_amount(line, " ", 3);
 
-                    variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", linefunc[2])));
+                    if linefunc[2].starts_with("\"")
+                    && linefunc[2].ends_with("\"") {
+                        let value: String = linefunc[2].replace("\"", "");
+                        variables.insert(format!("{}", linefunc[1]), Variable::Str(format!("{}", value)));
+                    } else {
+                        println!("{}", "Error 7: Invalid string".red());
+                        exit(1)
+                    }
                 }
 
                 else if comarg[0] == "int" {

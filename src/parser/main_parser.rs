@@ -1,11 +1,11 @@
 use std::collections::HashMap;
 use std::process::exit;
-use std::io;
 
 use colored::Colorize;
 
 use crate::Variable;
 use crate::split_amount;
+use crate::parser::commands;
 
 pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) {
     let mut loops: u32 = 1;
@@ -32,28 +32,7 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                     "out" => println!("{}", comarg[1]),
 
                     "outv" => {
-                        if comarg[1] != "LOOP" {
-                            let printed_var = variables.get(comarg[1]);
-
-                            match printed_var {
-                                Some(variable) => {
-                                    if let Variable::Str(value) = variable {
-                                        println!("{}", value);
-                                    } else if let Variable::Int(value) = variable {
-                                        println!("{}", value);
-                                    } else if let Variable::Byt(value) = variable {
-                                        println!("{}", value);
-                                    }
-                                }
-
-                                None => {
-                                    println!("{} {} {}", "Error 4: Variable".red(), comarg[1].blue(), "doesnt exist!".red());
-                                    exit(1)
-                                }
-                            }
-                        } else {
-                            println!("{}", loops);
-                        }
+                        commands::outv::outv(variables, comarg, loops);
                     }
 
                     "str" => {
@@ -90,99 +69,26 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                     }
 
                     "get" => {
-                        let linefunc: Vec<&str> = line.split(" ").collect();
-
-                        let var = variables.get(linefunc[1]);
-                        match var {
-                            Some(_variable) => {
-                                let mut new_value = String::new();
-                                io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
-                                new_value = new_value.trim().to_string();
-                                variables.remove(linefunc[1]);
-                                variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
-                            }
-
-                            None => {
-                                let mut new_value = String::new();
-                                io::stdin().read_line(&mut new_value).expect("Error 6: Failed to read line");
-                                new_value = new_value.trim().to_string();
-                                variables.insert(linefunc[1].to_string(), Variable::Str(new_value));
-                            }
-                        }
+                        commands::get::get(variables, line);
                     }
 
                     "inc" => {
-                        let linefunc: Vec<&str> = line.split(" ").collect();
-
-                        let var = variables.get(linefunc[1]);
-
-                        match var {
-                            Some(variable) => {
-                                if let Variable::Int(value) = variable {
-                                    let new_value = value + linefunc[2].parse::<i16>().unwrap();
-
-                                    variables.remove(linefunc[1]);
-                                    variables.insert(linefunc[1].to_string(), Variable::Int(new_value));
-                                }
-                            }
-
-                            None => {
-                                println!("{} {} {}", "Error 4: Variable".red(), linefunc[1].blue(), "doesnt exist!".red());
-                                exit(1)
-                            }
-                        }
+                        commands::inc::inc(variables, line);
                     }
 
                     "dec" => {
-                        let linefunc: Vec<&str> = line.split(" ").collect();
-
-                        let var = variables.get(linefunc[1]);
-
-                        match var {
-                            Some(variable) => {
-                                if let Variable::Int(value) = variable {
-                                    let new_value = value - linefunc[2].parse::<i16>().unwrap();
-
-                                    variables.remove(linefunc[1]);
-                                    variables.insert(linefunc[1].to_string(), Variable::Int(new_value));
-                                }
-                            }
-
-                            None => {
-                                println!("{} {} {}", "Error 4: Variable".red(), linefunc[1].blue(), "doesnt exist!".red());
-                                exit(1)
-                            }
-                        }
+                        commands::dec::dec(variables, line);
                     }
 
                     "cmp" => {
-                        let linefunc: Vec<&str> = line.split(" ").collect();
-
-                        let valid_int: Result<i16, _> = linefunc[2].parse();
-
-                        match valid_int {
-                            Ok(value) => {
-                                if linefunc[1] != "LOOP" {
-                                    if variables.get(linefunc[1]).unwrap() != &Variable::Int(value) &&
-                                    variables.get(linefunc[1]).unwrap() != &Variable::Byt(value as i8) {
-                                        line_number_at_cmp = line_number;
-                                        cmp_statement_size = linefunc[3].parse().unwrap();
-                                    }
-                                } else {
-                                    if loops != value as u32 {
-                                        line_number_at_cmp = line_number;
-                                        cmp_statement_size = linefunc[3].parse().unwrap();
-                                    }
-                                }
-                            }
-
-                            _ => {
-                                if variables.get(linefunc[1]).unwrap() != &Variable::Str(linefunc[2].to_string()) {
-                                    line_number_at_cmp = line_number;
-                                    cmp_statement_size = linefunc[3].parse().unwrap();
-                                }
-                            }
-                        }
+                        commands::cmp::cmp(
+                            variables,
+                            line,
+                            line_number,
+                            &mut line_number_at_cmp,
+                            &mut cmp_statement_size,
+                            loops
+                        );
                     }
 
                     "goto" => {

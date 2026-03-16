@@ -1,0 +1,3 @@
+cmd expr 3 * 3;
+
+HALT

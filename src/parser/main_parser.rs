@@ -104,6 +104,18 @@ pub fn parse_lines(lines: Vec<&str>, variables: &mut HashMap<String, Variable>) 
                         std::time::Duration::from_millis(comarg[1].parse::<u64>().unwrap())
                     ),
 
+                    "cmd" => {
+                        let linefunc: Vec<&str> = line.split(" ").collect();
+                        let executable = linefunc[1];
+                        let args: Vec<&str> = linefunc[2..].iter()
+                            .map(|a| a.trim_end_matches(';'))
+                            .collect();
+                        std::process::Command::new(executable)
+                            .args(args)
+                            .spawn()
+                            .expect("Failed to execute command");
+                    }
+
                     "//" => {},
 
                     "HALT" => break 'inf,
